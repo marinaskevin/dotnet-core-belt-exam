@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Login & Register";
+}
+
+@using DojoActivityCenter
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h1>Welcome to the Dojo Activity Center</h1>
+
+<hr>
+
+@Html.Partial("Register")
+<hr>
+@Html.Partial("Login")

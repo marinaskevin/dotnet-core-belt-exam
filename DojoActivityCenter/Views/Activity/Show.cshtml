@@ -1,0 +1,69 @@
+@{
+    ViewData["Title"] = ViewBag.Event.Title;
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <span class="align-bottom">
+            <h1>@ViewBag.Event.Title</h1>
+        </span>
+        <span class="align-bottom pull-right">
+            <nobr><a href="/Home">Home</a> | <a href="/User/Logout">Log off</a></nobr>
+        </span>
+    </div>
+</div>
+
+<hr>
+
+@using DojoActivityCenter
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model DojoActivityCenter.Models.Event
+
+    @{
+        bool creator = false;
+        string href = "/Activity/"+ViewBag.Event.EventId+"/RSVP/Create";
+        string label = "Join";
+        string color = "btn-success";
+        Console.WriteLine(ViewBag.User.UserId);
+        Console.WriteLine(ViewBag.Event.UserId);
+        if(ViewBag.Event.UserId == ViewBag.User.UserId)
+        {
+            creator = true;
+            href = "/Activity/"+ViewBag.Event.EventId+"/Delete";
+            label = "Delete";
+            color = "btn-danger";
+        }
+        if(!creator)
+        {
+            foreach(var Joined in ViewBag.RSVPs)
+            {
+                if(Joined.EventId == ViewBag.Event.EventId)
+                {
+                    href = "/Activity/"+ViewBag.Event.EventId+"/RSVP/Delete";
+                    label = "Leave";
+                    color = "btn-warning";
+                    break;
+                }
+            }
+        }
+        <a href="@href" class="btn @(color) pull-right">@label</a>
+    }
+
+<div class="container">
+    <h3>Date: <span style="font-weight: normal">@((ViewBag.Event.Date + ViewBag.Event.Time).ToString("MMM dd, yyyy @ h:MMtt"))</h3>
+    <h3>Description:</h3>
+    <div class="container">
+        <p>@ViewBag.Event.Description</p>
+    </div>
+    <h3>Guests:</h3>
+    <div class="container">
+        @if(ViewBag.EventGuests.Guests.Count == 0)
+        {
+            <h4>No Guests Enrolled.</h4>
+        }
+        @foreach(var Guest in ViewBag.EventGuests.Guests)
+        {
+            <h4>@Guest.User.FirstName @Guest.User.LastName</h4>
+        }
+    </div>
+</div>

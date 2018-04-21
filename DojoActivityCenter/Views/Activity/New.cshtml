@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "New Activity";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <span class="align-bottom">
+            <h1>Create an Activity!</h1>
+        </span>
+        <span class="align-bottom pull-right">
+            <nobr><a href="/Home">Home</a> | <a href="/User/Logout">Log off</a></nobr>
+        </span>
+    </div>
+</div>
+
+<hr>
+
+@using DojoActivityCenter
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model DojoActivityCenter.Models.Event
+
+<div class="row">
+    <div class="col-md-6">
+        <form action="/Activity/Create" method="POST">
+            <input type="hidden" name="UserId" value="@ViewBag.UserId">
+            <label asp-for="Title" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="Title" class="form-control">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <label asp-for="Description" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="Description" class="form-control">
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <label for="Date" class="col-md-4 control-label">Date</label>
+            <div class="col-md-8">
+                <input asp-for="Date" class="form-control" type="date">
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <label asp-for="Time" class="col-md-4 control-label">Time</label>
+            <div class="col-md-8">
+                <input asp-for="Time" class="form-control" type="time">
+                <span asp-validation-for="Time" class="text-danger"></span>
+            </div>
+            <div class="col-md-4"><button class="btn btn-primary pull-right">Create</button></div>
+        </form>
+    </div>
+</div>

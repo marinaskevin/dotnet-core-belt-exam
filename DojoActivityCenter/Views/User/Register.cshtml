@@ -1,0 +1,41 @@
+@model DojoActivityCenter.Models.Register
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Register</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <form action="/User/Create" method="post">
+            <label asp-for="FirstName" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="FirstName" class="form-control">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <label asp-for="LastName" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="LastName" class="form-control">
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <label asp-for="Email" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="Email" class="form-control">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+    </div>
+    <div class="col-md-6">
+            <label asp-for="Password" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="Password" class="form-control">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <label asp-for="PasswordConfirmation" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="PasswordConfirmation" class="form-control">
+                <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
+            </div>
+            <div class="col-md-4"><button class="btn btn-primary pull-right">Register</button></div>
+        </form>
+    </div>
+</div>

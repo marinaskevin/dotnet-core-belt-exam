@@ -1,0 +1,95 @@
+@{
+    ViewData["Title"] = "Activities";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <span class="align-bottom">
+            <h1>Dojo Activity Center</h1>
+        </span>
+        <span class="align-bottom pull-right">
+            <span>Welcome @(ViewBag.User.FirstName)!</span>
+            <a href="Logout">Log off</a>
+        </span>
+    </div>
+</div>
+
+<hr>
+
+<table class="table table-striped table-hover rounded-20">
+    <thead>
+        <tr>
+            <th class="col-sm-3 field-label active">Activity</th>
+            <th class="col-sm-2 field-label active">Date and Time</th>
+            <th class="col-sm-2 field-label active">Event Coordinator</th>
+            <th class="col-sm-2 field-label active">Number of Participants</th>
+            <th class="col-sm-1 field-label active">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @model DojoActivityCenter.Models.Event
+    @foreach(var Event in ViewBag.Events)
+    {
+        <tr>
+            <td class="col-sm-3"><a href="/Activity/@(Event.EventId)">@Event.Title</a></td>
+            <td class="col-sm-3">@((Event.Date + @Event.Time + new TimeSpan(0,0,50000)).ToString("MMM dd, yyyy @ h:MMtt"))</td>
+            <td class="col-sm-2">
+            @{
+                foreach(var User in ViewBag.Users)
+                {
+                    if(User.UserId == Event.UserId)
+                    {
+                        <span>@User.FirstName</span>
+                    }
+                    
+                }
+            }
+            </td>
+            <td class="col-sm-2">
+            @{
+                int count = 0;
+                foreach(var RSVP in ViewBag.AllRSVPs)
+                {
+                    if(RSVP.EventId == Event.EventId)
+                    {
+                        count++;
+                    }
+                    
+                }
+                <span>@count</span>
+            }
+            </td>
+            <td class="col-sm-2">
+                @{
+                    bool creator = false;
+                    string href = "/Activity/"+Event.EventId+"/RSVP/Create";
+                    string label = "Join";
+                    if(Event.UserId == ViewBag.User.UserId)
+                    {
+                        creator = true;
+                        href = "/Activity/"+Event.EventId+"/Delete";
+                        label = "Delete";
+                    }
+                    if(!creator)
+                    {
+                        foreach(var Joined in ViewBag.RSVPs)
+                        {
+                            if(Joined.EventId == Event.EventId)
+                            {
+                                href = "/Activity/"+Event.EventId+"/RSVP/Delete";
+                                label = "Leave";
+                                break;
+                            }
+                        }
+                    }
+                    <a href="@href">@label</a>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="container">
+    <a href="/New" class="btn btn-primary pull-right">Add New Activity!</a>
+</div>

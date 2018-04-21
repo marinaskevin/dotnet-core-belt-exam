@@ -1,0 +1,20 @@
+@model DojoActivityCenter.Models.Login
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Login</h2>
+        <form action="/User/Login" method="post">
+            <label asp-for="LoginEmail" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="LoginEmail" class="form-control">
+                <span asp-validation-for="LoginEmail" class="text-danger"></span>
+            </div>
+            <label asp-for="LoginPassword" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="LoginPassword" class="form-control">
+                <span asp-validation-for="LoginPassword" class="text-danger"></span>
+            </div>
+            <div class="col-md-4"><button class="btn btn-primary pull-right">Login</button></div>
+        </form>
+    </div>
+</div>
