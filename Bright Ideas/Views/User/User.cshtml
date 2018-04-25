@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<h1>User Profile</h1>
+<hr>
+<!-- HEADER -->
+<div class="row">
+    <div class="col-sm-12">
+        <p>Name : @(ViewBag.ViewUser.Name)</p>
+        <p>Alias : @(ViewBag.ViewUser.Alias)</p>
+        <p>Email : @(ViewBag.ViewUser.Email)</p>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-sm-12">
+        <p>Total Number of Ideas: @(ViewBag.NumIdeas)</p>
+        <p>Total Number of Likes: @(ViewBag.NumLikes)</p>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+@{
+    ViewData["Title"] = "Bright Ideas";
+}
+
+<!-- HEADER -->
+<div class="row">
+    <hr>
+    <div class="col-sm-12">
+        <h1>Hi @(ViewBag.User.Alias)!</h1>    
+    </div>
+    <!-- NEW IDEA FORM -->
+    <form id="IdeaForm" action="/bright_ideas/create" method="POST">
+        <div class="col-md-8">
+            <input type="hidden" name="UserId" value="@(ViewBag.User.UserId)">
+            <input asp-for="Content" class="form-control" placeholder="Post something witty here...." style="display: inline-block">
+            <button id="IdeaSubmit" class="btn btn-primary">Idea!</button>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+    </form>
+</div>
+
+<!-- LIST OF IDEAS -->
+@model Bright_Ideas.Models.Idea
+<div id="ideas">
+@foreach(var idea in ViewBag.Ideas)
+{
+    <div id="Idea@(idea.IdeaId)" class="row">
+        <hr>
+        <div class="col-sm-3">
+            <p><a href="/users/@(idea.UserId)">@(idea.User.Alias)</a> says:</p>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="col-sm-8">
+                    <p class="alert alert-info">@idea.Content</p>
+                </div>
+                <div class="col-sm-1">
+                    @if(idea.UserId == ViewBag.User.UserId)
+                    {
+                        <a href="/bright_ideas/@(idea.IdeaId)/delete" class="btn btn-danger">Delete</a>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                @{
+                    bool liked = false;
+                    bool owner = false;
+                    int likeId = 0;
+                    if(idea.UserId != ViewBag.User.UserId)
+                    {
+                        foreach(var like in ViewBag.Liked)
+                        {
+                            if(like.IdeaId == idea.IdeaId)
+                            {
+                                liked = true;
+                                likeId = like.LikeId;
+                            }
+                        }
+                        if(owner)
+                        {
+                            <a href="/bright_ideas/@(idea.IdeaId)/delete">Delete</a>
+                        }
+                        else if(liked)
+                        {
+                            <a href="/like/@(likeId)/delete">Unlike</a>
+                        }
+                        else
+                        {
+                            <a href="/like/@(idea.IdeaId)/create">Like</a>
+                        }
+                    }
+                }
+                </div>
+                <div class="col-sm-3"><a href="/bright_ideas/@(idea.IdeaId)">@(idea.Likes.Count) people</a> like this.</div>
+            </div>
+        </div>
+    </div>
+}
+</div>

@@ -1,0 +1,46 @@
+@{
+    ViewData["Title"] = "Like Status";
+}
+
+@model Bright_Ideas.Models.Idea
+
+<h1>Bright Idea #@(ViewBag.Idea.IdeaId)</h1>
+<hr>
+<div id="Idea@(ViewBag.Idea.IdeaId)" class="row">
+    <div class="col-sm-3">
+        <p><a href="/users/@(ViewBag.Idea.UserId)">@(ViewBag.Idea.User.Alias)</a> says:</p>
+    </div>
+    <div class="col-sm-9">
+        <div class="col-sm-8">
+            <p class="alert alert-info">@(ViewBag.Idea.Content)</p>
+        </div>
+        <div class="col-sm-1">
+            @if(ViewBag.Idea.UserId == ViewBag.User.UserId)
+            {
+                <a href="/bright_ideas/@(ViewBag.Idea.IdeaId)/delete" class="btn btn-danger">Delete</a>
+            }
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h2>People who liked this post:</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Alias</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var like in ViewBag.Idea.Likes)
+    {
+        <tr>
+            <td><a href="/users/@(like.UserId)">@(like.User.Alias)</a></td>
+            <td>@(like.User.Name)</td>
+        </tr>
+    }
+    </tbody>
+</table>

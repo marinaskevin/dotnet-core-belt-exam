@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Login & Register";
+}
+
+@if(ViewData["invalid"] != null)
+{
+    <div class="alert alert-warning">
+        <div asp-validation-summary="All"></div>
+    </div>
+}
+
+<div class="row">
+    <hr>
+    <div class="col-sm-12">
+        <h1>Welcome!</h1>    
+    </div>
+</div>
+
+<div class="row">
+    @Html.Partial("RegisterView")
+    @Html.Partial("LoginView")
+</div>
